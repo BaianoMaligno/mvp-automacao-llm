@@ -1,6 +1,6 @@
 # MVP de automação com LLM
 
-![Capa do projeto: MVP de automação com LLM](https://raw.githubusercontent.com/soteropolitano/mvp-automacao-llm/main/assets/linkedin-cover.jpg)
+![Capa do projeto: MVP de automação com LLM](https://raw.githubusercontent.com/BaianoMaligno/mvp-automacao-llm/main/assets/linkedin-cover.jpg)
 
 Este projeto nasceu de um problema que conheço na operação: a informação existe, mas costuma ficar espalhada entre documentos, páginas, anotações e históricos. Antes de resolver um incidente ou responder uma dúvida, parte do tempo é gasta procurando o material certo e organizando o contexto.
 
@@ -76,7 +76,7 @@ Este repositório documenta o raciocínio e as decisões. Ele não publica dados
 
 ## Arquivos privados de trabalho
 
-As fontes, configurações e instruções de uso ficam no [repositório privado Codex](https://github.com/soteropolitano/Codex/tree/main/projetos/mvp-automacao-llm/originais/Estudos_IA). Este repositório público contém a documentação do MVP e exemplos que não expõem dados pessoais.
+As fontes, configurações e instruções de uso ficam no [repositório privado projetos-llms](https://github.com/BaianoMaligno/projetos-llms/tree/main/projetos/mvp-automacao-llm/originais/Estudos_IA). Este repositório público contém a documentação do MVP e exemplos que não expõem dados pessoais.
 
 ## Documentação
 
