@@ -2,9 +2,9 @@
 
 ![Capa do projeto: MVP de automação com LLM](https://raw.githubusercontent.com/BaianoMaligno/mvp-automacao-llm/main/assets/linkedin-cover.jpg)
 
-Este projeto nasceu de um problema que conheço na operação: a informação existe, mas costuma ficar espalhada entre documentos, páginas, anotações e históricos. Antes de resolver um incidente ou responder uma dúvida, parte do tempo é gasta procurando o material certo e organizando o contexto.
+Na operação, muita informação já existe, mas fica espalhada em documentos, páginas, anotações e históricos. Antes de responder uma dúvida ou tratar um incidente, gasto tempo encontrando e organizando tudo.
 
-A ideia foi criar um caminho simples para consultar fontes controladas, organizar o conteúdo e gerar uma resposta útil para a operação. Não queríamos construir uma plataforma completa logo no início; o objetivo era validar a arquitetura, entender os limites e manter o consumo previsível.
+A ideia do MVP foi juntar esse contexto e gerar uma resposta útil, com as fontes usadas. Primeiro validar o fluxo, os limites e o custo. A plataforma completa podia esperar.
 
 ## O que o MVP buscava resolver
 
@@ -17,15 +17,15 @@ A ideia foi criar um caminho simples para consultar fontes controladas, organiza
 
 ## Como organizei a solução
 
-Organizamos o fluxo em três partes:
+Separei o fluxo em três partes:
 
 1. **Origem dos dados:** documentos e conteúdos textuais escolhidos para a consulta.
 2. **Processamento:** extração e normalização, triagem do conteúdo com o Gemini e preparação do contexto.
 3. **Saída operacional:** resposta organizada, referências utilizadas e material que pode voltar para a documentação.
 
-Os modelos tiveram funções diferentes. O **Gemini foi usado para triar e organizar o conteúdo**. O **GPT consumiu o contexto selecionado para produzir a resposta e a saída operacional**. Essa separação evitou tratar toda a base da mesma forma e deixou mais claro o papel de cada etapa.
+O **Gemini fez a triagem e organizou o conteúdo**. O **GPT recebeu o contexto selecionado e gerou a resposta**. Cada um tinha uma função no fluxo.
 
-Essa separação permite trocar uma fonte ou um modelo sem refazer todo o projeto. Também facilita identificar onde uma resposta falhou: na origem, na preparação do conteúdo, na busca ou na geração.
+Assim fica mais fácil trocar uma fonte ou modelo e encontrar a falha: na origem, na preparação, na busca ou na resposta.
 
 ```mermaid
 flowchart LR
@@ -43,17 +43,17 @@ flowchart LR
 
 ### Processamento de vídeos
 
-Vídeos ficaram fora do MVP. Para usá-los de forma responsável, seria necessário extrair ou transcrever o áudio, tratar duração, idioma, ruído, identificação de quem fala e divisão por tempo. Dependendo do conteúdo, ainda seria necessário analisar quadros e apresentações exibidas na tela.
+Vídeo ficou fora dessa etapa. Teria que transcrever áudio, tratar duração, idioma, ruído, falantes e marcações de tempo. Em alguns casos, também analisar o que aparece na tela.
 
-Isso aumentaria o custo, o tempo de processamento, o armazenamento e a quantidade de pontos de falha antes de validarmos o fluxo principal. A escolha foi trabalhar primeiro com texto. Quando uma fonte nasce em vídeo, a entrada preferida nesta fase é uma transcrição revisada e acompanhada do link e dos marcadores de tempo.
+Isso aumentaria custo, processamento, armazenamento e pontos de falha. Começamos por texto. Se a fonte for vídeo, nesta fase entra uma transcrição revisada, com link e marcações de tempo.
 
 ### Integração direta com o NotebookLM
 
-O NotebookLM era uma referência importante pela forma como trabalha com fontes e respostas apoiadas no conteúdo enviado. Mesmo assim, não colocamos uma integração direta no núcleo do MVP.
+Usei o NotebookLM como referência para consulta baseada em fontes. A integração direta ficou fora do núcleo do MVP.
 
-Na versão pessoal, não tínhamos um caminho oficial e estável para automatizar todo o fluxo que precisávamos. O Google passou a documentar APIs para o **Gemini Notebook Enterprise**, mas elas estão em preview e exigem projeto no Google Cloud, configuração, permissões e licenciamento próprios. Para um MVP voltado a baixo custo e controle, essa dependência mudaria o tamanho do projeto.
+Quando avaliamos a integração pessoal, não havia um caminho oficial e estável que atendesse ao fluxo. A análise registrada também considerou as APIs do **Gemini Notebook Enterprise**, então em preview, com projeto no Google Cloud, permissões e licenciamento próprios. Isso aumentaria o escopo e o custo; a disponibilidade precisa ser conferida de novo antes de retomar essa opção.
 
-Por isso, o NotebookLM ficou como ferramenta complementar para comparação manual e estudo. A arquitetura continua independente: se uma integração adequada fizer sentido no futuro, ela entra como um adaptador, sem substituir o restante do fluxo.
+O NotebookLM ficou para comparação manual e estudo. Se uma integração fizer sentido depois, pode entrar como adaptador, sem refazer o restante.
 
 ## Princípios adotados
 
@@ -68,9 +68,9 @@ Por isso, o NotebookLM ficou como ferramenta complementar para comparação manu
 
 ## O que conseguimos validar
 
-O MVP saiu do desenho e foi aplicado no Google Cloud. A base de dados organizada no Google Drive ficou funcional e pôde ser usada como fonte do fluxo de consulta e análise. Com isso, conseguimos validar na prática a separação entre origem dos dados, triagem com o Gemini, consumo do contexto pelo GPT e saída operacional.
+Aplicamos o MVP no Google Cloud, com a base organizada no Google Drive funcionando como fonte. Validamos o caminho entre entrada, triagem no Gemini, contexto para o GPT e resposta operacional.
 
-O trabalho também definiu o recorte do MVP, a arquitetura e os limites técnicos. Construímos esse MVP em colaboração. [Edmundo Neto](https://github.com/emal0n) contribuiu com a visão de desenvolvimento, backend e mobile, além de boas práticas de código, documentação e experiência de produto. Eu entrei principalmente com infraestrutura, cloud, SRE, automação, observabilidade e controle de custo. Essa troca ajudou a pensar no que seria viável desenvolver e manter no uso real, além de validar a ideia no papel.
+Construí o MVP com [Edmundo Neto](https://github.com/emal0n). Ele contribuiu com desenvolvimento, backend, mobile, boas práticas de código, documentação e produto. Minha parte ficou principalmente em infraestrutura, cloud, SRE, automação, observabilidade e custo. A ideia era conseguir desenvolver e manter o que estávamos propondo.
 
 Este repositório documenta o raciocínio e as decisões. Ele não publica dados internos, credenciais, bases privadas ou conteúdo usado apenas durante experimentos.
 
@@ -90,9 +90,9 @@ As fontes, configurações e instruções de uso ficam no [repositório privado 
 
 O MVP foi aplicado no Google Cloud e utilizou uma base organizada no Google Drive. O desenho manteve uma camada para ingestão e orquestração, preparação dos documentos e metadados, triagem com o Gemini, recuperação do contexto e consumo pelo GPT.
 
-O valor do MVP ficou na validação do fluxo completo e dos critérios de resposta. As tecnologias foram usadas para resolver cada parte do problema, sem transformar a arquitetura numa lista de ferramentas.
+O principal resultado foi testar o fluxo completo e os critérios da resposta. As ferramentas entraram conforme a necessidade de cada etapa.
 
 ## Resultado esperado
 
-Uma pergunta deve gerar uma resposta curta, verificável e útil para a operação. Quando a fonte não trouxer a resposta, o sistema deve dizer isso claramente. Uma resposta convincente sem apoio no material é uma falha, mesmo quando parece correta.
+Quero uma resposta curta, útil e que dê para conferir. Se a fonte não responder à pergunta, o sistema precisa dizer isso. Parecer certo sem ter apoio no material continua sendo erro.
 
